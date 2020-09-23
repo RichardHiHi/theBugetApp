@@ -1,0 +1,17 @@
+[33mcommit 12ba2b63c3b722ee2443b614f0d6bb6ab6dbd0fb[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Tue Sep 22 19:13:58 2020 +0700
+
+    set eventlistener for buntton (add_btn)
+
+[33mcommit ca75e84378687899fe3c42aba2e640d7e68802a6[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Tue Sep 22 09:08:25 2020 +0700
+
+    add module pattern
+
+[33mcommit 101140f6397031326c7575bf3241ab4c7150f492[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Mon Sep 21 19:46:15 2020 +0700
+
+    add input of project
