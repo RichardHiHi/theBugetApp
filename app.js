@@ -1,5 +1,5 @@
 //buget controller
-var bugetcontroller = (function () {
+var budgetcontroller = (function () {
   var income = function (id, des, val) {
     this.description = des;
     this.value = val;
@@ -10,6 +10,13 @@ var bugetcontroller = (function () {
     this.description = des;
     this.value = val;
     this.id = id;
+  };
+
+  var calculateTotal = function (type) {
+    var sum = 0;
+    data.allItem[type].forEach(function(cur){
+       sum += sum + cur.value;
+    })};
   };
 
   var data = {
@@ -45,6 +52,7 @@ var bugetcontroller = (function () {
 
       return newItem;
     },
+    calculateTotal: calculateTotal(),
   };
 })();
 
@@ -60,8 +68,8 @@ var UIcontroller = (function () {
       exp: ".expenses__list",
     },
     input: {
-      inc: ".add__description",
-      exp: ".add_value",
+      des: ".add__description",
+      val: ".add__value",
     },
   };
   return {
@@ -71,7 +79,7 @@ var UIcontroller = (function () {
       return {
         type: document.querySelector(DOMString.type).value,
         description: document.querySelector(DOMString.description).value,
-        value: document.querySelector(DOMString.value).value,
+        value: parseFloat(document.querySelector(DOMString.value).value),
       };
     },
     getDOMString: function () {
@@ -102,11 +110,14 @@ var UIcontroller = (function () {
     //clear form after done
     clearField: function () {
       var array = document.querySelectorAll(
-        DOMString.input.exp + "," + DOMString.input.inc
+        DOMString.input.des + "," + DOMString.input.val
       );
-      console.log(array);
+
       var arrField = Array.prototype.slice.call(array);
-      console.log(arrField);
+      arrField.forEach((element) => {
+        element.value = "";
+      });
+      array[0].focus();
     },
   };
 })();
@@ -127,22 +138,35 @@ var controller = (function (budgetCtrl, UICtrl) {
 
   var getDOMString = UICtrl.getDOMString();
 
+  var updateBudget = function () {
+    //calculate total expen and income
+    budgetCtrl.calculateTotal();
+  };
+
   var ctrlAddItem = function () {
     // get the input data
+
     var dataInput = UICtrl.getInput();
     console.log(dataInput);
-    // add the item to the budget controller
-    var obj = budgetCtrl.addItem(
-      dataInput.type,
-      dataInput.description,
-      dataInput.value
-    );
-
-    // add the item to the UI
-    console.log(obj);
-    UICtrl.addItemUI(obj, dataInput.type);
-    //clear field
-    UICtrl.clearField();
+    if (
+      dataInput.description !== "" &&
+      !isNaN(dataInput.value) &&
+      dataInput.value > 0
+    ) {
+      // add the item to the budget controller
+      var obj = budgetCtrl.addItem(
+        dataInput.type,
+        dataInput.description,
+        dataInput.value
+      );
+      // add the item to the UI
+      console.log(obj);
+      UICtrl.addItemUI(obj, dataInput.type);
+      //clear field
+      UICtrl.clearField();
+      //update budgetcontroller
+      updateBudget();
+    }
 
     // calcular the budget
 
@@ -151,6 +175,6 @@ var controller = (function (budgetCtrl, UICtrl) {
   return {
     init: setUpEventListener,
   };
-})(bugetcontroller, UIcontroller);
+})(budgetcontroller, UIcontroller);
 
 controller.init();
