@@ -77,9 +77,12 @@ var budgetcontroller = (function () {
       return {
         exp: data.total.exp,
         inc: data.total.inc,
-        percent: data.total.percent,
-        budget: data.total.budget,
+        percent: data.percent,
+        budget: data.budget,
       };
+    },
+    test: function () {
+      console.log(data);
     },
   };
 })();
@@ -161,10 +164,19 @@ var UIcontroller = (function () {
       budgetEXP,
       budgetPercent
     ) {
-      document.querySelector(DOMString.budget.value).value = budgetValue;
-      document.querySelector(DOMString.budget.inc).value = budgetInc;
-      document.querySelector(DOMString.budget.exp).value = budgetEXP;
-      document.querySelector(DOMString.budget.percent).value = budgetPercent;
+      document.querySelector(DOMString.budget.value).innerHTML = budgetValue;
+      document.querySelector(DOMString.budget.inc).innerHTML = budgetInc;
+      document.querySelector(DOMString.budget.exp).innerHTML = budgetEXP;
+      document.querySelector(
+        DOMString.budget.percent
+      ).innerHTML = budgetPercent;
+    },
+    //clear budget
+    clearBudget: function () {
+      document.querySelector(DOMString.budget.value).innerHTML = 0;
+      document.querySelector(DOMString.budget.inc).innerHTML = 0;
+      document.querySelector(DOMString.budget.exp).innerHTML = 0;
+      document.querySelector(DOMString.budget.percent).innerHTML = 0;
     },
   };
 })();
@@ -181,6 +193,7 @@ var controller = (function (budgetCtrl, UICtrl) {
         ctrlAddItem();
       }
     });
+    UICtrl.clearBudget();
   };
 
   var getDOMString = UICtrl.getDOMString();
@@ -194,13 +207,16 @@ var controller = (function (budgetCtrl, UICtrl) {
     budgetCtrl.calculatePercent();
     //get budget
     var getBudget = budgetCtrl.getBudget();
+
     // update IU budget
+
     UICtrl.updateUIBudget(
       getBudget.budget,
       getBudget.inc,
       getBudget.exp,
       getBudget.percent
     );
+    budgetCtrl.test();
   };
 
   var ctrlAddItem = function () {
