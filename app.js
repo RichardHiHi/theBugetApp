@@ -72,8 +72,14 @@ var budgetcontroller = (function () {
     calculatePercent: function () {
       calculatePercentIn(data.total.exp, data.total.inc);
     },
-    test: function () {
-      console.log(data);
+    //get data budget
+    getBudget: function () {
+      return {
+        exp: data.total.exp,
+        inc: data.total.inc,
+        percent: data.total.percent,
+        budget: data.total.budget,
+      };
     },
   };
 })();
@@ -148,6 +154,18 @@ var UIcontroller = (function () {
       });
       array[0].focus();
     },
+    //update UI of budget
+    updateUIBudget: function (
+      budgetValue,
+      budgetInc,
+      budgetEXP,
+      budgetPercent
+    ) {
+      document.querySelector(DOMString.budget.value).value = budgetValue;
+      document.querySelector(DOMString.budget.inc).value = budgetInc;
+      document.querySelector(DOMString.budget.exp).value = budgetEXP;
+      document.querySelector(DOMString.budget.percent).value = budgetPercent;
+    },
   };
 })();
 
@@ -170,11 +188,19 @@ var controller = (function (budgetCtrl, UICtrl) {
   var updateBudget = function () {
     //calculate total expen and income
     budgetCtrl.calculateTotals();
-    budgetCtrl.test();
     //calculate budget
     budgetCtrl.calculateBudget();
     //calculate percentage
     budgetCtrl.calculatePercent();
+    //get budget
+    var getBudget = budgetCtrl.getBudget();
+    // update IU budget
+    UICtrl.updateUIBudget(
+      getBudget.budget,
+      getBudget.inc,
+      getBudget.exp,
+      getBudget.percent
+    );
   };
 
   var ctrlAddItem = function () {
