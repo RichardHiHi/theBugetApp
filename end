@@ -1,0 +1,77 @@
+[33mcommit 4915ceac988ed980bb3f6c3e8f43c64c05b4887b[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Tue Sep 29 10:22:17 2020 +0700
+
+    fixsomething
+
+[33mcommit 0e4dfe808be297eba53c4f3281d5126ebe35c83a[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Mon Sep 28 01:15:33 2020 +0700
+
+    update UI of budget is fixed
+
+[33mcommit 2a7a34bf62db1a22c02664ef758f490a10ffc92d[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Sun Sep 27 22:11:18 2020 +0700
+
+    update UI of budget is bugging
+
+[33mcommit c2e45db16a7e0f002ed587a6a7cbe4013f015dbf[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Sun Sep 27 21:32:28 2020 +0700
+
+    update budget controller
+
+[33mcommit c73502d87036a5c89a61818bd862ca337d51d962[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Sun Sep 27 15:15:05 2020 +0700
+
+    calculate income and expense
+
+[33mcommit d89a3ae28fc7d3a6d2504f545f2c0464ade4abe8[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Sat Sep 26 19:15:59 2020 +0700
+
+    continue
+
+[33mcommit 94852f30b89a301d179b38db6eeac574be43c2a8[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Fri Sep 25 00:50:45 2020 +0700
+
+    fix bug of UI
+
+[33mcommit c4b57d3e016fff1a2f7a50c8b4a1fe60d5c78b9e[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Fri Sep 25 00:48:29 2020 +0700
+
+    add new item to UI
+
+[33mcommit cd3da30c6e7e651ef0805d1acdaead0fe7e0c9ec[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Thu Sep 24 20:10:04 2020 +0700
+
+    add item to budgetController
+
+[33mcommit ac4978ae29c4d58f013d3ba5a62b5c8602ad570b[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Thu Sep 24 00:52:54 2020 +0700
+
+    get inputdata for UIcontroller
+
+[33mcommit 12ba2b63c3b722ee2443b614f0d6bb6ab6dbd0fb[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Tue Sep 22 19:13:58 2020 +0700
+
+    set eventlistener for buntton (add_btn)
+
+[33mcommit ca75e84378687899fe3c42aba2e640d7e68802a6[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Tue Sep 22 09:08:25 2020 +0700
+
+    add module pattern
+
+[33mcommit 101140f6397031326c7575bf3241ab4c7150f492[m
+Author: thanh <thanhtrong.nguyen1602@gmail.com>
+Date:   Mon Sep 21 19:46:15 2020 +0700
+
+    add input of project

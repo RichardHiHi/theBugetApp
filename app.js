@@ -40,6 +40,24 @@ var budgetcontroller = (function () {
       data.percent = Math.round((expense / income) * 100);
     }
   };
+  var deleteItemIN = function (id, type) {
+    var nameArray;
+    console.log(typeof id);
+    console.log(id);
+    console.log(type);
+    if (type === "income") {
+      nameArray = "inc";
+    } else if (type === "expense") {
+      nameArray = "exp";
+    }
+    data.allItem[nameArray].forEach(function (value, index, array) {
+      if (value.id === id) {
+        data.allItem[nameArray].splice(index, 1);
+      }
+      console.log(value);
+    });
+    console.log(data.allItem[nameArray]);
+  };
   return {
     addItem: function (type, des, val) {
       var newItem, id;
@@ -83,6 +101,10 @@ var budgetcontroller = (function () {
     },
     test: function () {
       console.log(data);
+    },
+    //delete item of budget
+    deleteItem: function (id, type) {
+      deleteItemIN(id, type);
     },
   };
 })();
@@ -228,7 +250,17 @@ var controller = (function (budgetCtrl, UICtrl) {
     }
   };
   var ctrlDeleteItem = function (event) {
-    console.log(event.target.parentNode);
+    var id, idSlpit, type;
+    idSlpit = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (idSlpit) {
+      array = idSlpit.split("-");
+      id = parseInt(array[1]);
+      type = array[0];
+    }
+    //delete item from data
+    budgetCtrl.deleteItem(id, type);
+    //delete item from UI
   };
   return {
     init: function () {
