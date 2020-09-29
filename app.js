@@ -108,6 +108,7 @@ var UIcontroller = (function () {
       exp: ".budget__expenses--value",
       percent: " .budget__expenses--percentage",
     },
+    listItem: ".container",
   };
   return {
     // get input data
@@ -158,25 +159,11 @@ var UIcontroller = (function () {
       array[0].focus();
     },
     //update UI of budget
-    updateUIBudget: function (
-      budgetValue,
-      budgetInc,
-      budgetEXP,
-      budgetPercent
-    ) {
-      document.querySelector(DOMString.budget.value).innerHTML = budgetValue;
-      document.querySelector(DOMString.budget.inc).innerHTML = budgetInc;
-      document.querySelector(DOMString.budget.exp).innerHTML = budgetEXP;
-      document.querySelector(
-        DOMString.budget.percent
-      ).innerHTML = budgetPercent;
-    },
-    //clear budget
-    clearBudget: function () {
-      document.querySelector(DOMString.budget.value).innerHTML = 0;
-      document.querySelector(DOMString.budget.inc).innerHTML = 0;
-      document.querySelector(DOMString.budget.exp).innerHTML = 0;
-      document.querySelector(DOMString.budget.percent).innerHTML = 0;
+    disPlayUIBudget: function (obj) {
+      document.querySelector(DOMString.budget.value).innerHTML = obj.budget;
+      document.querySelector(DOMString.budget.inc).innerHTML = obj.inc;
+      document.querySelector(DOMString.budget.exp).innerHTML = obj.exp;
+      document.querySelector(DOMString.budget.percent).innerHTML = obj.percent;
     },
   };
 })();
@@ -193,7 +180,9 @@ var controller = (function (budgetCtrl, UICtrl) {
         ctrlAddItem();
       }
     });
-    UICtrl.clearBudget();
+    document
+      .querySelector(getDOMString.listItem)
+      .addEventListener("click", ctrlDeleteItem);
   };
 
   var getDOMString = UICtrl.getDOMString();
@@ -209,13 +198,7 @@ var controller = (function (budgetCtrl, UICtrl) {
     var getBudget = budgetCtrl.getBudget();
 
     // update IU budget
-
-    UICtrl.updateUIBudget(
-      getBudget.budget,
-      getBudget.inc,
-      getBudget.exp,
-      getBudget.percent
-    );
+    UICtrl.disPlayUIBudget(getBudget);
     budgetCtrl.test();
   };
 
@@ -244,8 +227,19 @@ var controller = (function (budgetCtrl, UICtrl) {
       updateBudget();
     }
   };
+  var ctrlDeleteItem = function (event) {
+    console.log(event.target.parentNode);
+  };
   return {
-    init: setUpEventListener,
+    init: function () {
+      setUpEventListener();
+      UICtrl.disPlayUIBudget({
+        budget: 0,
+        inc: 0,
+        exp: 0,
+        percent: 0,
+      });
+    },
   };
 })(budgetcontroller, UIcontroller);
 
