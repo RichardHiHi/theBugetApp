@@ -187,6 +187,11 @@ var UIcontroller = (function () {
       document.querySelector(DOMString.budget.exp).innerHTML = obj.exp;
       document.querySelector(DOMString.budget.percent).innerHTML = obj.percent;
     },
+    //delete item of UI
+    deleteItemUI: function (id) {
+      console.log(id);
+      document.querySelector("#" + id).remove();
+    },
   };
 })();
 
@@ -261,6 +266,7 @@ var controller = (function (budgetCtrl, UICtrl) {
     //delete item from data
     budgetCtrl.deleteItem(id, type);
     //delete item from UI
+    UICtrl.deleteItemUI(idSlpit);
   };
   return {
     init: function () {
