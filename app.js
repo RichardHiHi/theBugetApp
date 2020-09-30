@@ -22,6 +22,7 @@ var budgetcontroller = (function () {
     },
     budget: 0,
     percent: -1,
+    percentExp: [],
   };
 
   var calculateTotal = function (type) {
@@ -58,6 +59,10 @@ var budgetcontroller = (function () {
     });
     console.log(data.allItem[nameArray]);
   };
+  var calculatePercentExpIn = function (expen) {
+    var per = Math.round((expen / data.total.inc) * 100);
+    data.percentExp.push(per);
+  };
   return {
     addItem: function (type, des, val) {
       var newItem, id;
@@ -90,6 +95,9 @@ var budgetcontroller = (function () {
     calculatePercent: function () {
       calculatePercentIn(data.total.exp, data.total.inc);
     },
+    calculatePercentExp: function (exp) {
+      calculatePercentExpIn(exp);
+    },
     //get data budget
     getBudget: function () {
       return {
@@ -97,6 +105,7 @@ var budgetcontroller = (function () {
         inc: data.total.inc,
         percent: data.percent,
         budget: data.budget,
+        percentExp: data.percentExp,
       };
     },
     test: function () {
@@ -134,7 +143,6 @@ var UIcontroller = (function () {
   };
   return {
     // get input data
-
     getInput: function () {
       return {
         type: document.querySelector(DOMString.type).value,
@@ -185,7 +193,8 @@ var UIcontroller = (function () {
       document.querySelector(DOMString.budget.value).innerHTML = obj.budget;
       document.querySelector(DOMString.budget.inc).innerHTML = obj.inc;
       document.querySelector(DOMString.budget.exp).innerHTML = obj.exp;
-      document.querySelector(DOMString.budget.percent).innerHTML = obj.percent;
+      document.querySelector(DOMString.budget.percent).innerHTML =
+        obj.percent + "%";
     },
     //delete item of UI
     deleteItemUI: function (id) {
@@ -226,9 +235,7 @@ var controller = (function (budgetCtrl, UICtrl) {
 
     // update IU budget
     UICtrl.disPlayUIBudget(getBudget);
-    budgetCtrl.test();
   };
-
   var ctrlAddItem = function () {
     // get the input data
 
@@ -252,6 +259,11 @@ var controller = (function (budgetCtrl, UICtrl) {
       UICtrl.clearField();
       //update budgetcontroller
       updateBudget();
+      //update percent of expen
+      if (dataInput.type === "exp") {
+        updatePercent(dataInput.value);
+        console.log(budgetCtrl.getBudget().percentExp);
+      }
     }
   };
   var ctrlDeleteItem = function (event) {
@@ -267,6 +279,19 @@ var controller = (function (budgetCtrl, UICtrl) {
     budgetCtrl.deleteItem(id, type);
     //delete item from UI
     UICtrl.deleteItemUI(idSlpit);
+    //caculate budget
+    budgetCtrl.calculateTotals();
+    budgetCtrl.calculatePercent();
+    budgetCtrl.calculateBudget();
+    //update UI after delete item
+    UICtrl.disPlayUIBudget(budgetCtrl.getBudget());
+  };
+  var updatePercent = function (exp) {
+    //caculate percent
+    budgetCtrl.calculatePercentExp(exp);
+    //update percent of budget
+
+    //update percent of UI
   };
   return {
     init: function () {
