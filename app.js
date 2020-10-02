@@ -140,6 +140,7 @@ var UIcontroller = (function () {
       percent: " .budget__expenses--percentage",
     },
     listItem: ".container",
+    itemPercent: ".item__percentage",
   };
   return {
     // get input data
@@ -200,6 +201,19 @@ var UIcontroller = (function () {
     deleteItemUI: function (id) {
       console.log(id);
       document.querySelector("#" + id).remove();
+    },
+    updatePercentItem: function (percent) {
+      var fields = document.querySelectorAll(DOMString.itemPercent);
+
+      var nodeListForEach = function (list, callback) {
+        for (var i = 0; i < list.length; i++) {
+          callback(list[i], i);
+        }
+      };
+      nodeListForEach(fields, function (current, index) {
+        console.log(percent[index]);
+        current.textContent = percent[index] + "%";
+      });
     },
   };
 })();
@@ -289,9 +303,10 @@ var controller = (function (budgetCtrl, UICtrl) {
   var updatePercent = function (exp) {
     //caculate percent
     budgetCtrl.calculatePercentExp(exp);
-    //update percent of budget
-
+    //read data from budget
+    var percentExp = budgetCtrl.getBudget().percentExp;
     //update percent of UI
+    UICtrl.updatePercentItem(percentExp);
   };
   return {
     init: function () {
