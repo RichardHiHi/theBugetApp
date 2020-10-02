@@ -142,6 +142,27 @@ var UIcontroller = (function () {
     listItem: ".container",
     itemPercent: ".item__percentage",
   };
+  var formatNumberIn = function (num, type) {
+    var numSplit, int, dec;
+
+    num = Math.abs(num);
+    num = num.toFixed(2);
+    numSplit = num.split(".");
+
+    int = numSplit[0];
+
+    if (int.length > 3) {
+      int =
+        int.substr(0, int.length - 3) +
+        "," +
+        int.substr(int.length - 3, int.length);
+    }
+
+    dec = numSplit[1];
+
+    type === "inc" ? (sign = "+") : (sign = "-");
+    return sign + " " + int + "." + dec;
+  };
   return {
     // get input data
     getInput: function () {
@@ -162,17 +183,17 @@ var UIcontroller = (function () {
       if (type === "inc") {
         element = DOMString.list.inc;
         html =
-          '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">+ %value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+          '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
       } else if (type === "exp") {
         element = DOMString.list.exp;
         html =
-          '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">- %value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+          '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
       }
       // replace id val des to html to newhtml
 
       newHtml = html.replace("%id%", obj.id);
       newHtml = newHtml.replace("%description%", obj.description);
-      newHtml = newHtml.replace("%value%", obj.value);
+      newHtml = newHtml.replace("%value%", formatNumberIn(obj.value, type));
       //insert the html into the DOM
       document.querySelector(element).insertAdjacentHTML("beforeend", newHtml);
       //
@@ -191,9 +212,20 @@ var UIcontroller = (function () {
     },
     //update UI of budget
     disPlayUIBudget: function (obj) {
-      document.querySelector(DOMString.budget.value).innerHTML = obj.budget;
-      document.querySelector(DOMString.budget.inc).innerHTML = obj.inc;
-      document.querySelector(DOMString.budget.exp).innerHTML = obj.exp;
+      obj.budget > 0
+        ? (budget = formatNumberIn(obj.budget, "inc"))
+        : (budget = formatNumberIn(obj.budget, "exp"));
+
+      document.querySelector(DOMString.budget.value).innerHTML = budget;
+
+      document.querySelector(DOMString.budget.inc).innerHTML = formatNumberIn(
+        obj.inc,
+        "inc"
+      );
+      document.querySelector(DOMString.budget.exp).innerHTML = formatNumberIn(
+        obj.exp,
+        "exp"
+      );
       document.querySelector(DOMString.budget.percent).innerHTML =
         obj.percent + "%";
     },
@@ -215,6 +247,7 @@ var UIcontroller = (function () {
         current.textContent = percent[index] + "%";
       });
     },
+    formatNumber: formatNumberIn(),
   };
 })();
 
