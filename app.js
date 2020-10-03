@@ -141,6 +141,7 @@ var UIcontroller = (function () {
     },
     listItem: ".container",
     itemPercent: ".item__percentage",
+    month: ".budget__title--month",
   };
   var formatNumberIn = function (num, type) {
     var numSplit, int, dec;
@@ -162,6 +163,11 @@ var UIcontroller = (function () {
 
     type === "inc" ? (sign = "+") : (sign = "-");
     return sign + " " + int + "." + dec;
+  };
+  var nodeListForEach = function (list, callback) {
+    for (var i = 0; i < list.length; i++) {
+      callback(list[i], i);
+    }
   };
   return {
     // get input data
@@ -237,17 +243,25 @@ var UIcontroller = (function () {
     updatePercentItem: function (percent) {
       var fields = document.querySelectorAll(DOMString.itemPercent);
 
-      var nodeListForEach = function (list, callback) {
-        for (var i = 0; i < list.length; i++) {
-          callback(list[i], i);
-        }
-      };
       nodeListForEach(fields, function (current, index) {
         console.log(percent[index]);
         current.textContent = percent[index] + "%";
       });
     },
-    formatNumber: formatNumberIn(),
+    updateMoth: function () {
+      var now, year;
+      now = new Date();
+      year = now.getFullYear();
+      document.querySelector(DOMString.month).innerHTML = year;
+    },
+    changeColor: function () {
+      var field = document.querySelectorAll(
+        DOMString.input.val + "," + DOMString.input.des + "," + DOMString.type
+      );
+      nodeListForEach(field, function (cur) {
+        cur.classList.add("red-focus");
+      });
+    },
   };
 })();
 
@@ -266,6 +280,9 @@ var controller = (function (budgetCtrl, UICtrl) {
     document
       .querySelector(getDOMString.listItem)
       .addEventListener("click", ctrlDeleteItem);
+    document
+      .querySelector(getDOMString.type)
+      .addEventListener("change", UICtrl.changeColor);
   };
 
   var getDOMString = UICtrl.getDOMString();
@@ -351,6 +368,7 @@ var controller = (function (budgetCtrl, UICtrl) {
         exp: 0,
         percent: 0,
       });
+      UICtrl.updateMoth();
     },
   };
 })(budgetcontroller, UIcontroller);
