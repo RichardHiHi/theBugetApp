@@ -59,10 +59,7 @@ var budgetcontroller = (function () {
     });
     console.log(data.allItem[nameArray]);
   };
-  var calculatePercentExpIn = function (expen) {
-    var per = Math.round((expen / data.total.inc) * 100);
-    data.percentExp.push(per);
-  };
+  var calculatePercentExpIn = function (expen) {};
   return {
     addItem: function (type, des, val) {
       var newItem, id;
@@ -95,12 +92,15 @@ var budgetcontroller = (function () {
     calculatePercent: function () {
       calculatePercentIn(data.total.exp, data.total.inc);
     },
-    calculatePercentExp: function (exp) {
-      calculatePercentExpIn(exp);
+    calculatePercentExp: function (expen) {
+      var per = Math.round((expen / data.total.inc) * 100);
+      data.percentExp.push(per);
+      return per;
     },
     //get data budget
     getBudget: function () {
       return {
+        arrExp: data.allItem.exp,
         exp: data.total.exp,
         inc: data.total.inc,
         percent: data.percent,
@@ -201,6 +201,12 @@ var UIcontroller = (function () {
       console.log(id);
       document.querySelector("#" + id).remove();
     },
+    //update percent of expense
+    updateUIPercentExp: function (id, per) {
+      console.log(id);
+      console.log(per);
+      // document.querySelector("#expense-" + id).innerHTML = per;
+    },
   };
 })();
 
@@ -261,7 +267,8 @@ var controller = (function (budgetCtrl, UICtrl) {
       updateBudget();
       //update percent of expen
       if (dataInput.type === "exp") {
-        updatePercent(dataInput.value);
+        updatePercent(dataInput.value, obj.id);
+
         console.log(budgetCtrl.getBudget().percentExp);
       }
     }
@@ -286,12 +293,14 @@ var controller = (function (budgetCtrl, UICtrl) {
     //update UI after delete item
     UICtrl.disPlayUIBudget(budgetCtrl.getBudget());
   };
-  var updatePercent = function (exp) {
+  var updatePercent = function (exp, id) {
     //caculate percent
-    budgetCtrl.calculatePercentExp(exp);
+    var per = budgetCtrl.calculatePercentExp(exp);
+    console.log(per);
     //update percent of budget
-
+    var obj = budgetCtrl.getBudget();
     //update percent of UI
+    UICtrl.updateUIPercentExp(id, per);
   };
   return {
     init: function () {
